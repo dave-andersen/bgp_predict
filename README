@@ -38,4 +38,19 @@ To re-create the results from our 2008 SIGCOMM paper, "Accountable Internet Prot
 
     predicted = exp(intercept + day*x)
 
-3)  Insert those values into "plotsize.gp"
+4)  Insert those values into "plotsize.gp"
+    gnuplot plotsize.gp
+
+5)  Optionally, run "projections.rb" to get the output of the 
+    then (2007-based) predicted costs of compute resources
+    needed to handle the predicted table sizes and churn.
+
+6)  Optionally, grab a copy of the daily-updates count
+    (att-daily-updates.txt and sprint-daily-updates, for example), and run
+
+     ./updates_per_week.rb <file1> > file1-weekly.txt
+     ./updates_per_week.rb <file2> > file2-weekly.txt
+
+     And then plot them using plotupdates.gp:
+
+     gnuplot plotupdates.gp
