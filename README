@@ -1,0 +1,41 @@
+This is the code used to produce projections of BGP routing
+table growth via a best-fit exponential regression, used
+in our SIGCOMM 2008 paper, "Accountable Internet Protocol."
+Requires ruby and R.
+
+bgp-active.txt:  BGP table size #s from Geoff Huston
+bgp-daily.txt:  The BGP table info stripped down to one point per day
+regress.r:  An R script to produce a linear and exponential fit to bgp-daily.txt
+bgpfit.{eps,pdf}:  The output of regress.r
+
+To re-create the results from our 2008 SIGCOMM paper, "Accountable Internet Protocol",:
+
+1)  Extract the last entry from each (Julian) day from Geoff Huston's #s:
+
+      ./daily-filter.rb bgp-active.txt > bgp-daily.txt
+
+   (Ignore the rest of the stuff in daily-filter - it used to try to do
+    everything, but it was easier to just do the regression in R)
+
+   Produces output in the form of:  AMJD  count
+   (AMJD = Astronomical modified julian day)
+
+
+2)  Run the regression, which puts an output graph in bgpfit.ps
+    and prints to stdout the sum of squares error and fit:
+
+     r -f regress.r
+
+    The output graph will include both a best linear fit (not likely to work well)
+    and a best exponential fit (hopefully better).  The exp fit will look like:
+
+        Coefficients:
+          (Intercept)          day  
+            8.8583433    0.0005233  
+
+3)  Convert the output of the regression to something more friendly, because
+    the regression is a linear fit on the log data.
+
+    predicted = exp(intercept + day*x)
+
+3)  Insert those values into "plotsize.gp"
