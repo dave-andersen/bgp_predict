@@ -29,9 +29,17 @@ To re-create the results from our 2008 SIGCOMM paper, "Accountable Internet Prot
     The output graph will include both a best linear fit (not likely to work well)
     and a best exponential fit (hopefully better).  The exp fit will look like:
 
-        Coefficients:
-          (Intercept)          day  
-            8.8583433    0.0005233  
+    The exponential fit is the *last* text output (expfit2), and should
+    look, on the original data, like:
+
+-----------------
+Nonlinear regression model
+  model:  entries ~ exp(alpha + beta * day) 
+   data:  data 
+    alpha      beta 
+9.3735436 0.0004253 
+ residual sum-of-squares: 2.632e+11
+-----------------
 
 3)  Convert the output of the regression to something more friendly, because
     the regression is a linear fit on the log data.
